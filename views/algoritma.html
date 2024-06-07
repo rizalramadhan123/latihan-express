@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algoritma</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="5%">no</th>
+                        <th width="20%">soal</th>
+                        <th width="40%">Koding</th>
+                        <th width="15%">Hasil</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            Terdapat string "NEGIE1", silahkan reverse alphabet nya dengan angka tetap diakhir kata Hasil = "EIGEN1"
+                        </td>
+                        <td>
+                            const soal1String = 'NEGIE1'; <br>
+                            const numberString = soal1String.replace(/\D/g, '');<br>
+                            const alphabetString = soal1String.replace(/[^a-zA-Z]/g, '');<br>
+
+                            let newSoal1String = '';<br>
+
+                            for(let i = alphabetString.length - 1; i >= 0; i--) {<br>
+                                newSoal1String += alphabetString[i];<br>
+                            }<br>
+                            newSoal1String += numberString;
+                        </td>
+                        <td>
+                            <%= soal1  %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>
+                            Diberikan contoh sebuah kalimat, silahkan cari kata terpanjang dari kalimat tersebut, jika ada kata dengan panjang yang sama silahkan ambil salah satu
+                            <br>
+                            Contoh:
+                            <br>
+                            const sentence = "Saya sangat senang mengerjakan soal algoritma"
+                            longest(sentence) 
+                            // mengerjakan: 11 character
+                        </td>
+                        <td>
+                            const kata = "Saya sangat suka belajar javascript dan suka php".split(" "); <br>
+                            let kataPanjang = ""; <br>
+                            
+                            for (const k of kata) {<br>
+                                if (k.length > kata.length) {<br>
+                                kataPanjang = k;<br>
+                                }<br>
+                            }<br>
+                        </td>
+                        <td>
+                            <%= soal2  %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>
+                            Terdapat dua buah array yaitu array INPUT dan array QUERY, silahkan tentukan berapa kali kata dalam QUERY terdapat pada array INPUT <br>
+                            Contoh:
+                            <br>    
+                            INPUT = ['xc', 'dz', 'bbb', 'dz']  
+                            QUERY = ['bbb', 'ac', 'dz']  
+                            <br>
+                            OUTPUT = [1, 0, 2] karena kata 'bbb' terdapat 1 pada INPUT, kata 'ac' tidak ada pada INPUT, dan kata 'dz' terdapat 2 pada INPUT
+                        </td>
+                        <td>
+                            const INPUT = ['xc', 'dz', 'bbb', 'dz']; <br>
+                            const QUERY = ['bbb', 'ac', 'dz']; <br>
+
+                            const wordCount = INPUT.reduce((acc, word) => {
+                                acc[word] = (acc[word] || 0) + 1; <br>
+                                return acc; <br>
+                            }, {}); <br>
+
+                            const soal3 = QUERY.map(word => wordCount[word] || 0); <br>
+                        </td>
+                        <td>
+                            <%= soal3  %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>
+                            Silahkan cari hasil dari pengurangan dari jumlah diagonal sebuah matrik NxN Contoh:
+                            Contoh:
+
+                            Matrix = [[1, 2, 0], [4, 5, 6], [7, 8, 9]]
+
+                            diagonal pertama = 1 + 5 + 9 = 15 
+                            diagonal kedua = 0 + 5 + 7 = 12 
+
+                            maka hasilnya adalah 15 - 12 = 3
+                        </td>
+                        <td>
+                            const matrix = [[1, 2, 0], [4, 5, 6], [7, 8, 9]]; <br>
+
+                        let diagonal1Sum = 0; <br>
+                        let diagonal2Sum = 0; <br>
+
+                        for (let i = 0; i < matrix.length; i++) { <br>
+                            diagonal1Sum += matrix[i][i]; <br>
+                            diagonal2Sum += matrix[i][matrix.length - 1 - i]; <br>
+                        }
+                        </td>
+                        <td>
+                            <%= soal4  %>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+</body>
+</html>

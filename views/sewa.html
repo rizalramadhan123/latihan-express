@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algoritma</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS to override container width */
+        @media (min-width: 1200px) {
+          .container {
+            max-width: 1600px; /* Adjust the max-width as per your requirement */
+          }
+        }
+      </style>
+</head>
+<body>
+    <div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom bg-danger">
+        <h3 class="ml-2" style="color: white;">Aplikasi Sewa Buku</h3>
+      </header>
+    <main role="main">
+<div class="album py-5 bg-light">
+            <div class="row justify-content-center">
+              <div class="col-md-5">
+                <div class="card mb-8 m box-shadow">
+                  <table class="bordered" id="tbl_buku">
+                    <thead>
+                        <tr>
+                            <th>kode</th>
+                            <th>nama</th>
+                            <th>author</th>
+                            <th>Stok</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="card mb-8 m box-shadow">
+                    <table class="bordered" id="tbl_member">
+                        <thead>
+                            <tr>
+                                <th>kode</th>
+                                <th>nama</th>
+                                <th>Pinalty</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-md-10 mt-5">
+                <div class="card mb-8 m box-shadow">
+                    <table class="bordered" id="tbl_pinalty">
+                        <thead>
+                            <tr>
+                                <th>kode</th>
+                                <th>nama</th>
+                                <th>Pinalty</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
+                </div>
+              </div>
+            </div>
+          </div>
+    </main>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $('document').ready(() => {
+        $.ajax({
+            url:'/books',
+            type:'get',
+            success:(response) => {
+                let data = '';
+                for(res of response){
+                    data += '<tr>';
+                        data += '<td>'+res['code']+'</td>';
+                        data += '<td>'+res['title']+'</td>';
+                        data += '<td>'+res['author']+'</td>';
+                        data += '<td>'+res['stock']+'</td>';
+                    data += '</tr>';
+                }
+                $('#tbl_pinalty tbody').html(data)
+            }
+        })
+
+        $.ajax({
+            url:'/members',
+            type:'get',
+            success:(response) => {
+                let data = '';
+                for(res of response){
+                    data += '<tr>';
+                        data += '<td>'+res['code']+'</td>';
+                        data += '<td>'+res['name']+'</td>';
+                        if(res['pinalty'] == 't'){
+                            data += '<td class="bg-danger">'+res['pinalty']+'</td>';
+                        }else{
+                            data += '<td>'+res['pinalty']+'</td>';
+                        }
+                    data += '</tr>';
+                }
+                $('#tbl_buku tbody').html(data)
+            }
+        })
+
+        $.ajax({
+            url:'/sewa',
+            type:'get',
+            success:(response) => {
+                let data = '';
+                for(res of response){
+                    data += '<tr>';
+                        data += '<td>'+res['code']+'</td>';
+                        data += '<td>'+res['name']+'</td>';
+                        if(res['pinalty'] == 't'){
+                            data += '<td class="bg-danger">'+res['pinalty']+'</td>';
+                        }else{
+                            data += '<td>'+res['pinalty']+'</td>';
+                        }
+                    data += '</tr>';
+                }
+                $('#tbl_buku tbody').html(data)
+            }
+        })
+    });
+</script>
+  
+</body>
+</html>

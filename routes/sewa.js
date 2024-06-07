@@ -92,6 +92,15 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ message: 'Member sudah menyewa 2 buku' });
     }
 
+    // Cek stok buku
+    if (book.stock <= 0) {
+      return res.status(400).json({ message: 'Stok buku habis' });
+    }
+
+    // Mengurangi stok buku
+    book.stock -= 1;
+    await book.save();
+
     const sewa = new Sewa({
       memberId,
       bookId,
@@ -194,17 +203,24 @@ router.put('/:id', getSewa, async (req, res) => {
 
 router.delete('/:id', getSewa, async (req, res) => {
   try {
-    await res.sewa.remove();
+    const sewa = res.sewa;
+
+    // Mengembalikan stok buku
+    const book = await Book.findById(sewa.bookId);
+    book.stock += 1;
+    await book.save();
+
+    await sewa.remove();
 
     // Cek apakah pengembalian terlambat
     const currentDate = new Date();
-    const endDate = new Date(res.sewa.endDate);
+    const endDate = new Date(sewa.endDate);
     const diffTime = Math.abs(currentDate - endDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     if (diffDays > 7) {
       // Menetapkan penalti pada member
-      await Member.findByIdAndUpdate(res.sewa.memberId, { penalty: 't' });
+      await Member.findByIdAndUpdate(sewa.memberId, { penalty: 't' });
     }
 
     res.status(204).send();
